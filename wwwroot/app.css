@@ -28,6 +28,8 @@
     --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
+    --text-heading: #ffffff;
+    --nav-bg: rgba(16, 22, 34, 0.9);
 }
 
 /* --- Reset & Base --- */
@@ -136,7 +138,7 @@ img {
     width: 100%;
     z-index: 50;
     border-bottom: 1px solid var(--slate-800);
-    background: rgba(16, 22, 34, 0.9);
+    background: var(--nav-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 }
@@ -306,7 +308,7 @@ img {
     font-size: 2.25rem;
     font-weight: 700;
     letter-spacing: -0.025em;
-    color: white;
+    color: var(--text-heading);
     margin-bottom: 1.5rem;
     line-height: 1.15;
 }
@@ -660,7 +662,7 @@ img {
 .card-title {
     font-size: 1.25rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-heading);
     margin-bottom: 0.75rem;
 }
 
@@ -676,7 +678,7 @@ img {
 .section-heading {
     font-size: 1.875rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-heading);
     margin-bottom: 3rem;
     display: flex;
     align-items: center;
@@ -882,7 +884,7 @@ img {
 .flagship-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-heading);
 }
 
 .flagship-badge {
@@ -911,7 +913,7 @@ img {
 .stat-value {
     font-size: 1.875rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-heading);
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
@@ -955,7 +957,7 @@ img {
 }
 
 .link-arrow:hover {
-    color: white;
+    color: var(--text-heading);
 }
 
 .link-arrow .material-icons {
@@ -979,7 +981,7 @@ img {
 .selected-works-title {
     font-size: 1.25rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-heading);
     margin-bottom: 2rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--slate-800);
@@ -1021,7 +1023,7 @@ img {
 .work-card-title {
     font-size: 1.125rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-heading);
 }
 
 .work-card-icon {
@@ -1082,7 +1084,7 @@ img {
 .stack-title {
     font-size: 1.875rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-heading);
     margin-bottom: 2rem;
 }
 
@@ -1155,7 +1157,7 @@ img {
 
 .stack-badge:hover {
     border-color: rgba(var(--primary-rgb), 0.5);
-    color: white;
+    color: var(--text-heading);
 }
 
 /* =============================================
@@ -1182,7 +1184,7 @@ img {
 .about-title {
     font-size: 1.125rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-heading);
     margin-bottom: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -1274,7 +1276,7 @@ img {
     font-size: 1.5rem;
     font-weight: 700;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    color: white;
+    color: var(--text-heading);
     margin-bottom: 0.5rem;
 }
 
@@ -1286,7 +1288,7 @@ img {
 }
 
 .footer-email:hover {
-    color: white;
+    color: var(--text-heading);
 }
 
 .footer-contact-line {
@@ -1306,7 +1308,7 @@ img {
 }
 
 .footer-social:hover {
-    color: white;
+    color: var(--text-heading);
 }
 
 .footer-social svg {
@@ -1416,7 +1418,7 @@ img {
 }
 
 .expandable-trigger:hover {
-    color: white;
+    color: var(--text-heading);
 }
 
 .expandable-icon {
@@ -1573,7 +1575,7 @@ img {
 .timeline-title {
     font-size: 1.25rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-heading);
 }
 
 .timeline-role {
@@ -1641,7 +1643,7 @@ img {
 }
 
 .timeline-highlight strong {
-    color: white;
+    color: var(--text-heading);
 }
 
 /* =============================================
@@ -1700,7 +1702,7 @@ img {
 .education-degree {
     font-size: 1.125rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-heading);
 }
 
 .education-spec {
@@ -1742,4 +1744,82 @@ img {
 .hero-social-link:hover {
     color: var(--primary);
     transform: translateY(-2px);
+}
+
+/* =============================================
+   Light Theme Overrides
+   ============================================= */
+[data-theme="light"] {
+    --bg-dark: #f6f6f8;
+    --surface-dark: #ffffff;
+    --slate-200: #1e293b;
+    --slate-300: #334155;
+    --slate-400: #475569;
+    --slate-500: #64748b;
+    --slate-600: #94a3b8;
+    --slate-700: #cbd5e1;
+    --slate-800: #e2e8f0;
+    --slate-900: #f1f5f9;
+    --text-heading: #0f172a;
+    --nav-bg: rgba(246, 246, 248, 0.9);
+}
+
+/* Override hardcoded colors that can't use vars */
+[data-theme="light"] .json-block {
+    background: #f1f5f9;
+}
+
+[data-theme="light"] .terminal-card {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .flagship-card {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+}
+
+[data-theme="light"] .timeline-marker {
+    border-color: var(--bg-dark);
+}
+
+/* =============================================
+   Theme Toggle — Icon
+   ============================================= */
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    color: inherit;
+}
+
+.theme-toggle .material-icons {
+    font-size: 1.125rem;
+    vertical-align: middle;
+}
+
+/* Dark mode: show sun icon, hide moon */
+.theme-icon-dark {
+    display: none;
+}
+
+.theme-icon-light {
+    display: inline;
+}
+
+/* Light mode: show moon icon, hide sun */
+[data-theme="light"] .theme-icon-dark {
+    display: inline;
+}
+
+[data-theme="light"] .theme-icon-light {
+    display: none;
 }
