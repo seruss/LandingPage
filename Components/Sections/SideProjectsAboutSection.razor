@@ -1,0 +1,85 @@
+@* Side Projects & About *@
+<section class="about-section reveal" id="about">
+    <div class="container">
+        <div class="about-layout">
+            @* Side projects *@
+            <div>
+                <h3 class="side-title">Side Quests</h3>
+                <ul class="side-list">
+                    <li>
+                        <a class="side-item" href="https://github.com/seruss/NationsCities" target="_blank" rel="noopener">
+                            <div>
+                                <div class="side-item-name">NationsCities</div>
+                                <div class="side-item-desc">Real-time multiplayer word game</div>
+                            </div>
+                            <span class="material-icons side-item-arrow">arrow_forward</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="side-item" href="https://github.com/seruss/WordpressClient" target="_blank" rel="noopener">
+                            <div>
+                                <div class="side-item-name">WordpressClient</div>
+                                <div class="side-item-desc">YouTube → WordPress automation + GPT</div>
+                            </div>
+                            <span class="material-icons side-item-arrow">arrow_forward</span>
+                        </a>
+                    </li>
+                    <li class="side-item-expandable">
+                        <div class="side-item" style="cursor:default;">
+                            <div>
+                                <div class="side-item-name">Data Intelligence Platform</div>
+                                <div class="side-item-desc">Document processing + LLM analysis</div>
+                            </div>
+                            <span class="material-icons" style="color:var(--slate-600);font-size:0.75rem;">lock</span>
+                        </div>
+                        <details class="expandable" style="margin-top:0.5rem;">
+                            <summary class="expandable-trigger">
+                                <span class="material-icons expandable-icon">expand_more</span>
+                                What it does
+                            </summary>
+                            <div class="expandable-body">
+                                <ul class="detail-list">
+                                    <li><strong>Multi-format ingestion:</strong> PDF parsing (PdfPig + Tabula for tables),
+                                        Excel processing (OpenXml), HTML scraping (HtmlAgilityPack), reverse-engineered RSS feeds</li>
+                                    <li><strong>Intelligence:</strong> OpenAI API for semantic content analysis, FuzzySharp for duplicate detection</li>
+                                    <li><strong>Resilience:</strong> Polly retry policies, circuit breakers, exponential backoff for unstable sources</li>
+                                    <li><strong>Modern stack:</strong> SurrealDB (multi-model NoSQL), Telegram bot for real-time notifications</li>
+                                    <li><strong>Full ownership:</strong> infrastructure, code, deployment — end-to-end system</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </li>
+                </ul>
+            </div>
+
+            @* About *@
+            <div>
+                <h3 class="about-title">About</h3>
+                <div class="about-prose">
+                    <p>
+                        I'm a Senior Backend Developer from Tychy, Poland, with 6+ years building distributed systems in .NET/C#.
+                        My biggest achievement is a production logging platform processing 3TB+ daily from 300+ microservices —
+                        a system I later formalized as my Master's thesis at the University of Economics in Katowice.
+                    </p>
+                    <p>
+                        Outside of distributed systems, I'm a classically trained violinist. I play in a band (violin + cajón),
+                        sing in a choir, and play piano. I bring the same discipline from music to engineering —
+                        where a single wrong note can collapse an entire symphony, a single race condition can bring down a cluster.
+                    </p>
+                    <p>
+                        I hold both M.Sc. (Big Data Analysis) and B.Sc. (Databases &amp; Systems Engineering) degrees in Computer Science,
+                        and I'm always exploring cutting-edge tech — from pgvector to SurrealDB to early GPT integration.
+                    </p>
+                </div>
+
+                <div class="about-languages">
+                    <h4 class="detail-block-title" style="margin-top:1.5rem;">Languages</h4>
+                    <div class="stack-badges" style="margin-top:0.75rem;">
+                        <span class="stack-badge">🇵🇱 Polish — Native</span>
+                        <span class="stack-badge">🇬🇧 English — C1 Fluent</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

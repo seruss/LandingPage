@@ -1,0 +1,129 @@
+@* Selected Works *@
+<section class="selected-works reveal">
+    <div class="container">
+        <h3 class="selected-works-title">Selected Works</h3>
+        <div class="works-grid">
+            @* Media Delivery System *@
+            <div class="work-card reveal">
+                <div class="work-card-header">
+                    <h4 class="work-card-title">Media Delivery System</h4>
+                    <span class="material-icons work-card-icon">image</span>
+                </div>
+                <p class="work-card-desc">
+                    High-throughput media delivery serving 100–500k images/day with contractual SLA 99%.
+                    On-the-fly transformations, CDN integration, and ML-driven compression.
+                </p>
+
+                <details class="expandable">
+                    <summary class="expandable-trigger">
+                        <span class="material-icons expandable-icon">expand_more</span>
+                        Details
+                    </summary>
+                    <div class="expandable-body">
+                        <ul class="detail-list">
+                            <li><strong>SLA 99% delivery</strong> — contractual requirement with B2B clients, achieved via CDN integration,
+                                fallback mechanisms, and monitoring</li>
+                            <li><strong>ML.NET predictive compression</strong> — trained model to predict JPEG quality parameter directly,
+                                eliminating iterative brute-force approach</li>
+                            <li><strong>Zero-copy processing pipeline</strong> — raw pointer passing from ImageMagick directly to MozJPEG,
+                                eliminating intermediate memory copies</li>
+                            <li><strong>Testing infrastructure</strong> — the only service in the entire company with unit tests in CI pipeline</li>
+                            <li>Stack: libvips, FFmpeg, MozJPEG, ImageMagick, Azure Blob Storage</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <div class="work-card-footer">
+                    <div class="work-card-tags">
+                        <span class="work-card-tag work-card-tag-primary">C# / .NET</span>
+                        <span class="work-card-tag work-card-tag-muted">libvips</span>
+                        <span class="work-card-tag work-card-tag-muted">ML.NET</span>
+                        <span class="work-card-tag work-card-tag-muted">CDN</span>
+                    </div>
+                </div>
+            </div>
+
+            @* Microservices Migration *@
+            <div class="work-card reveal">
+                <div class="work-card-header">
+                    <h4 class="work-card-title">Microservices Migration</h4>
+                    <span class="material-icons work-card-icon">dns</span>
+                </div>
+                <p class="work-card-desc">
+                    Led monolith-to-microservices migration with key architectural decisions.
+                    Image similarity search via PostgreSQL + pgvector with 15x SIMD speedup.
+                </p>
+
+                <details class="expandable">
+                    <summary class="expandable-trigger">
+                        <span class="material-icons expandable-icon">expand_more</span>
+                        Details
+                    </summary>
+                    <div class="expandable-body">
+                        <ul class="detail-list">
+                            <li><strong>PostgreSQL + pgvector</strong> — chose relational DB with vector extension over dedicated vector DBs
+                                (Pinecone, Weaviate). Hybrid relational + vector search in a single database.</li>
+                            <li><strong>dHash perceptual hashing</strong> — image fingerprinting with Hamming distance for similarity detection</li>
+                            <li><strong>SIMD optimization</strong> — System.Runtime.Intrinsics for Hamming distance calculation.
+                                <strong>15x speedup</strong> over standard implementation. Rare skill in the .NET ecosystem.</li>
+                            <li><strong>Architecture design</strong> — service boundaries, gRPC vs REST communication patterns,
+                                deployment model design</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <div class="work-card-footer">
+                    <div class="work-card-tags">
+                        <span class="work-card-tag work-card-tag-primary">C# / .NET</span>
+                        <span class="work-card-tag work-card-tag-muted">pgvector</span>
+                        <span class="work-card-tag work-card-tag-muted">SIMD</span>
+                        <span class="work-card-tag work-card-tag-muted">PostgreSQL</span>
+                    </div>
+                </div>
+            </div>
+
+            @* NationsCities *@
+            <div class="work-card reveal">
+                <div class="work-card-header">
+                    <h4 class="work-card-title">NationsCities</h4>
+                    <span class="material-icons work-card-icon">sports_esports</span>
+                </div>
+                <p class="work-card-desc">
+                    Real-time multiplayer word game with anti-cheat system and consensus-based voting.
+                    Built with Blazor Server and SignalR for live state synchronization.
+                </p>
+
+                <details class="expandable">
+                    <summary class="expandable-trigger">
+                        <span class="material-icons expandable-icon">expand_more</span>
+                        Details
+                    </summary>
+                    <div class="expandable-body">
+                        <ul class="detail-list">
+                            <li><strong>Anti-cheat system</strong> — browser tab visibility detection via JavaScript interop,
+                                progressive penalty system for repeat offenders</li>
+                            <li><strong>Consensus-based validation</strong> — players vote on answer validity,
+                                majority-rule algorithm for dispute resolution</li>
+                            <li><strong>Real-time state sync</strong> — SignalR hub design patterns,
+                                game state synchronization across 50+ concurrent players</li>
+                            <li>Dark/light theme, mobile-responsive, product-grade UX polish</li>
+                        </ul>
+                        <div style="margin-top:0.75rem;">
+                            <a href="https://github.com/seruss/NationsCities" class="link-arrow" target="_blank" rel="noopener">
+                                View on GitHub <span class="material-icons">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+                </details>
+
+                <div class="work-card-footer">
+                    <div class="work-card-tags">
+                        <span class="work-card-tag work-card-tag-primary">Blazor Server</span>
+                        <span class="work-card-tag work-card-tag-muted">SignalR</span>
+                        <span class="work-card-tag work-card-tag-muted">Tailwind CSS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

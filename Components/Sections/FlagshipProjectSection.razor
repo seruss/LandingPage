@@ -1,0 +1,136 @@
+@* Flagship Project — Distributed Logging Platform *@
+<section class="flagship reveal" id="projects">
+    <div class="container">
+        <h2 class="section-heading">
+            <span class="section-heading-bar"></span>
+            Flagship Project
+        </h2>
+
+        <div class="flagship-card">
+            <div class="flagship-layout">
+                @* Architecture Diagram *@
+                <div class="flagship-diagram">
+                    <div class="flagship-diagram-bg bg-grid-pattern"></div>
+                    <div class="arch-diagram">
+                        @* Ingest layer *@
+                        <div style="display:flex;justify-content:center">
+                            <div class="arch-node arch-node-ingest">
+                                gRPC Ingest<br /><span>Load Balancer</span>
+                            </div>
+                        </div>
+
+                        <div class="arch-connector">
+                            <div class="arch-connector-line"></div>
+                        </div>
+
+                        @* Worker nodes *@
+                        <div class="arch-workers">
+                            <div class="arch-worker">Worker Node</div>
+                            <div class="arch-worker">Worker Node</div>
+                            <div class="arch-worker">Worker Node</div>
+                        </div>
+
+                        <div class="arch-split">
+                            <div class="arch-split-center"></div>
+                            <div class="arch-split-horizontal"></div>
+                        </div>
+
+                        @* Storage layer *@
+                        <div class="arch-storage">
+                            <div class="arch-store">
+                                <span class="arch-store-label arch-store-label-redis">REDIS</span>
+                                Hot Cache
+                            </div>
+                            <div class="arch-store">
+                                <span class="arch-store-label arch-store-label-elastic">ELASTIC</span>
+                                Long-term
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Details *@
+                <div class="flagship-details">
+                    <div class="flagship-title-row">
+                        <h3 class="flagship-title">Distributed Logging Platform</h3>
+                        <span class="flagship-badge">Production</span>
+                    </div>
+
+                    <p class="flagship-desc">
+                        Centralized logging system for .NET distributed applications, processing structured logs from 300+
+                        microservice instances. Elasticsearch storage, gRPC streaming ingestion, Redis buffering. Reduced
+                        mean time to detect from hours to minutes. Later formalized as M.Sc. thesis.
+                    </p>
+
+                    <div class="flagship-stats">
+                        <div>
+                            <div class="stat-value" data-count="3">3TB+</div>
+                            <div class="stat-label">Daily Logs</div>
+                        </div>
+                        <div>
+                            <div class="stat-value" data-count="300">300+</div>
+                            <div class="stat-label">Services</div>
+                        </div>
+                        <div>
+                            <div class="stat-value">MTTD↓</div>
+                            <div class="stat-label">Hours → Minutes</div>
+                        </div>
+                    </div>
+
+                    <div class="tech-tags">
+                        <span class="tech-tag tech-tag-primary">C# / .NET</span>
+                        <span class="tech-tag">gRPC</span>
+                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">Elasticsearch</span>
+                        <span class="tech-tag">Kubernetes</span>
+                    </div>
+
+                    <details class="expandable">
+                        <summary class="expandable-trigger">
+                            <span class="material-icons expandable-icon">expand_more</span>
+                            Technical deep dive
+                        </summary>
+                        <div class="expandable-body">
+                            <div class="detail-grid">
+                                <div class="detail-block">
+                                    <h4 class="detail-block-title">Architecture</h4>
+                                    <ul class="detail-list">
+                                        <li><strong>Log Collection:</strong> gRPC ingestion (unary + streaming) with REST API fallback,
+                                            structured logging format for .NET application integration</li>
+                                        <li><strong>Storage &amp; Indexing:</strong> Elasticsearch with index rotation, retention management,
+                                            and query optimization for TB-scale data</li>
+                                        <li><strong>Buffering:</strong> Redis for reliable log delivery — cannot lose production logs</li>
+                                        <li><strong>No Kafka</strong> — direct ingestion to Elasticsearch (intentional architectural decision)</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-block">
+                                    <h4 class="detail-block-title">Technical Challenges Solved</h4>
+                                    <ul class="detail-list">
+                                        <li><strong>Scale:</strong> Efficient indexing strategies and query optimization for 3TB+ daily volume</li>
+                                        <li><strong>Performance:</strong> gRPC streaming for high throughput with batching and backpressure handling</li>
+                                        <li><strong>Reliability:</strong> Idempotent ingestion, retry mechanisms, Redis buffering for zero log loss</li>
+                                        <li><strong>Data Model:</strong> Unified log schema with field mapping and metadata standardization across 300+ services</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="detail-block" style="margin-top:1rem;">
+                                <h4 class="detail-block-title">Business Value</h4>
+                                <p class="detail-note">
+                                    Centralized logging for the entire ecosystem. Reduced mean time to detect from <strong>hours to minutes</strong>.
+                                    Single source of truth for debugging production issues.
+                                    <strong>Master's thesis</strong> based on 2 years of real production data — a rare combination of academic rigor
+                                    and production validation.
+                                </p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <a href="https://github.com/seruss" class="link-arrow" target="_blank" rel="noopener" style="margin-top:1rem;display:inline-flex;">
+                        View on GitHub
+                        <span class="material-icons">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

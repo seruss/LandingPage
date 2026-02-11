@@ -1,0 +1,30 @@
+## Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+
+## .NET
+*.user
+*.userosscache
+*.sln.docstates
+project.lock.json
+*.suo
+*.cache
+*.vs/
+
+## IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+## OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+## Publish
+publish/

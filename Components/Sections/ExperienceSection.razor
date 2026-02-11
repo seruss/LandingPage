@@ -1,0 +1,129 @@
+@* Experience Timeline *@
+<section class="experience reveal" id="experience">
+    <div class="container">
+        <h2 class="section-heading">
+            <span class="section-heading-bar"></span>
+            Experience
+        </h2>
+
+        <div class="timeline">
+            @* media-press.tv *@
+            <div class="timeline-item reveal">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <div>
+                            <h3 class="timeline-title">media-press.tv group</h3>
+                            <div class="timeline-role">Junior .NET Developer → .NET Developer → B2B Contractor</div>
+                        </div>
+                        <div class="timeline-meta">
+                            <span class="timeline-date">Oct 2020 — Present</span>
+                            <span class="timeline-badge-industry">TV Metadata Industry</span>
+                        </div>
+                    </div>
+
+                    <p class="timeline-desc">
+                        Backend-focused role in a 4–5 person team handling high-volume multimedia assets for B2B clients
+                        (marketing agencies, TV stations, publishers). Progressed from Junior to independent B2B contractor.
+                    </p>
+
+                    <div class="timeline-highlights">
+                        <div class="timeline-highlight">
+                            <span class="material-icons timeline-highlight-icon">storage</span>
+                            <span>Designed distributed logging processing <strong>3TB+ daily</strong> from <strong>300+ services</strong></span>
+                        </div>
+                        <div class="timeline-highlight">
+                            <span class="material-icons timeline-highlight-icon">image</span>
+                            <span>Built media delivery with <strong>SLA 99%</strong> serving <strong>100–500k images/day</strong></span>
+                        </div>
+                        <div class="timeline-highlight">
+                            <span class="material-icons timeline-highlight-icon">speed</span>
+                            <span>Achieved <strong>15x speedup</strong> via SIMD instructions in vector similarity search</span>
+                        </div>
+                        <div class="timeline-highlight">
+                            <span class="material-icons timeline-highlight-icon">architecture</span>
+                            <span>Led <strong>monolith → microservices</strong> migration with key architectural decisions</span>
+                        </div>
+                    </div>
+
+                    <details class="expandable">
+                        <summary class="expandable-trigger">
+                            <span class="material-icons expandable-icon">expand_more</span>
+                            Full details &amp; achievements
+                        </summary>
+                        <div class="expandable-body">
+                            <div class="detail-grid">
+                                <div class="detail-block">
+                                    <h4 class="detail-block-title">Key Projects</h4>
+                                    <ul class="detail-list">
+                                        <li><strong>Distributed Logging Platform</strong> — centralized log aggregation for all .NET applications.
+                                            Elasticsearch storage, gRPC streaming ingestion, Redis buffering. Reduced MTTD from hours to minutes.
+                                            Later formalized as M.Sc. thesis.</li>
+                                        <li><strong>Media Delivery System</strong> — on-the-fly transformations (libvips, FFmpeg, MozJPEG),
+                                            ML.NET predictive JPEG compression, zero-copy processing pipeline. Only service with unit tests in CI.</li>
+                                        <li><strong>Microservices Migration</strong> — PostgreSQL + pgvector for image similarity search (dHash, Hamming distance).
+                                            Service boundaries design, gRPC vs REST communication patterns.</li>
+                                        <li><strong>Redis Notification Framework</strong> — event processing with Redis Streams and backpressure handling.</li>
+                                        <li><strong>Universal Search Platform</strong> — contributed to API and worker services with vector + full-text search
+                                            using OpenSearch and Kafka (currently in development).</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-block">
+                                    <h4 class="detail-block-title">Impact &amp; Ownership</h4>
+                                    <ul class="detail-list">
+                                        <li>Go-to person for complex technical problems across the organization</li>
+                                        <li>Designed CI/CD pipelines in Azure DevOps for multi-service deployments</li>
+                                        <li>Introduced unit testing and CI integration as first in the organization</li>
+                                        <li>Presented at internal "dev days" — knowledge sharing across teams</li>
+                                        <li>International collaboration (team member from Germany)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            @* Freelance *@
+            <div class="timeline-item reveal">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <div>
+                            <h3 class="timeline-title">Freelance Developer</h3>
+                            <div class="timeline-role">telewizjatychy.pl</div>
+                        </div>
+                        <div class="timeline-meta">
+                            <span class="timeline-date">Aug 2019 — Oct 2020</span>
+                        </div>
+                    </div>
+
+                    <p class="timeline-desc">
+                        WordPress automation with YouTube integration. Evolved from WinForms GUI to fully automated
+                        Windows background service. Early adopter of GPT-3.5 for content tagging.
+                    </p>
+
+                    <details class="expandable">
+                        <summary class="expandable-trigger">
+                            <span class="material-icons expandable-icon">expand_more</span>
+                            Technical details
+                        </summary>
+                        <div class="expandable-body">
+                            <ul class="detail-list">
+                                <li>Automated checking for new YouTube videos and posting to WordPress</li>
+                                <li>Integrated <strong>GPT-3.5 API</strong> for automated tag and category selection — pioneering practical LLM adoption</li>
+                                <li>Full ownership: design, development, deployment</li>
+                                <li>Stack: C#/.NET, Windows Forms, Windows Background Service, WordPress API, YouTube API</li>
+                            </ul>
+                            <div style="margin-top:0.75rem;">
+                                <a href="https://github.com/seruss/WordpressClient" class="link-arrow" target="_blank" rel="noopener">
+                                    View on GitHub <span class="material-icons">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
