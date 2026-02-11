@@ -1767,6 +1767,23 @@ img {
 /* Override hardcoded colors that can't use vars */
 [data-theme="light"] .json-block {
     background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+[data-theme="light"] .json-key {
+    color: #7c3aed;
+}
+
+[data-theme="light"] .json-value {
+    color: #16a34a;
+}
+
+[data-theme="light"] .json-brace {
+    color: #ca8a04;
+}
+
+[data-theme="light"] .json-comment {
+    color: #94a3b8;
 }
 
 [data-theme="light"] .terminal-card {

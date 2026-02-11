@@ -4,7 +4,7 @@ Personal portfolio & landing page built with **Blazor Web App (Static SSR)** —
 
 ## ✨ Features
 
-- **Dark theme** with custom design system (Space Grotesk font, CSS variables, no frameworks)
+- **Dark & light themes** with custom design system (Space Grotesk font, CSS variables, no frameworks)
 - **Scroll-reveal animations** via IntersectionObserver + CSS transitions
 - **Expandable project details** — clean at first glance, rich on demand (`<details>/<summary>`)
 - **Floating terminal card** with animated activity bars
@@ -61,10 +61,22 @@ dotnet publish -c Release
 
 ```
 LandingPage/
+├── .github/
+│   └── workflows/                       # CI/CD pipeline
+├── Analytics/
+│   ├── AnalyticsEndpoints.cs            # API endpoints for stats dashboard
+│   ├── AnalyticsMiddleware.cs           # Request tracking middleware
+│   ├── EventBuffer.cs                   # Batched event buffer for SurrealDB
+│   ├── TrackingEvent.cs                 # Event model
+│   └── VisitRecord.cs                   # Visit record model
 ├── Components/
 │   ├── App.razor                        # HTML root, fonts, meta
-│   ├── Layout/MainLayout.razor          # Fixed navigation bar
-│   ├── Pages/Home.razor                 # Main page composing all sections
+│   ├── Routes.razor                     # Blazor routing
+│   ├── _Imports.razor                   # Global using directives
+│   ├── Layout/
+│   │   └── MainLayout.razor             # Fixed navigation bar + theme toggle
+│   ├── Pages/
+│   │   └── Home.razor                   # Main page composing all sections
 │   └── Sections/                        # Individual section components
 │       ├── HeroSection.razor
 │       ├── WhatIDoSection.razor
@@ -76,10 +88,19 @@ LandingPage/
 │       ├── EducationSection.razor
 │       ├── SideProjectsAboutSection.razor
 │       └── FooterSection.razor
+├── Properties/
+│   └── launchSettings.json              # Dev server config
 ├── wwwroot/
-│   ├── app.css                          # Complete design system (~1500 lines)
-│   └── js/animations.js                 # Scroll reveals, counters, parallax
-└── Program.cs                           # Blazor startup
+│   ├── app.css                          # Complete design system + light/dark themes
+│   ├── favicon.png
+│   └── js/
+│       ├── animations.js                # Scroll reveals, counters, parallax
+│       ├── theme.js                     # Dark/light theme toggle persistence
+│       └── tracker.js                   # Analytics tracking client
+├── Program.cs                           # Blazor startup + middleware
+├── appsettings.json                     # Base configuration
+├── appsettings.Development.json         # Development overrides
+└── appsettings.Production.json          # Production overrides (SurrealDB, etc.)
 ```
 
 ## 📄 License
