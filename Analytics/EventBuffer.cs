@@ -155,7 +155,13 @@ public class EventBuffer : BackgroundService
         try
         {
             using var scope = _serviceProvider.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<ISurrealDbClient>();
+            var db = scope.ServiceProvider.GetService<ISurrealDbClient>();
+            if (db == null)
+            {
+                _logger.LogWarning("SurrealDB not configured. Dropping {VisitCount} visits and {EventCount} events.",
+                    visits.Count, events.Count);
+                return;
+            }
 
             // Batch insert visits
             foreach (var visit in visits)

@@ -15,8 +15,12 @@ public static class AnalyticsEndpoints
         var group = app.MapGroup("/api/analytics");
 
         // Client enrichment: screen info, fingerprint, performance data
-        group.MapPost("/enrich", async (HttpContext context, ISurrealDbClient db) =>
+        group.MapPost("/enrich", async (HttpContext context) =>
         {
+            var db = context.RequestServices.GetService<ISurrealDbClient>();
+            if (db == null)
+                return Results.StatusCode(503); // SurrealDB not configured
+
             if (context.Request.ContentLength > MaxPayloadBytes)
                 return Results.StatusCode(413);
 
