@@ -4,8 +4,8 @@
         <div class="footer-inner">
             <div>
                 <div class="footer-headline">Let's build something scalable.</div>
-                <a class="footer-email" href="mailto:contact@pawel-seweryn.pl">contact&#64;pawel-seweryn.pl</a>
-                <div class="footer-contact-line">+48 796 561 084 · Tychy, Poland</div>
+                <a class="footer-email" id="footer-email" href="#"></a>
+                <div class="footer-contact-line" id="footer-phone"></div>
             </div>
             <div class="footer-socials">
                 <a class="footer-social" href="https://github.com/seruss" target="_blank" rel="noopener" aria-label="GitHub">
@@ -21,3 +21,15 @@
         </div>
     </div>
 </footer>
+
+<script>
+    (function () {
+        var u = 'contact', d = 'pawel-seweryn', t = 'pl';
+        var e = u + '@' + d + '.' + t;
+        var el = document.getElementById('footer-email');
+        if (el) { el.href = 'mai' + 'lto:' + e; el.textContent = e; }
+
+        var ph = document.getElementById('footer-phone');
+        if (ph) { ph.textContent = ['+48', '796', '561', '084'].join(' ') + ' \u00b7 Tychy, Poland'; }
+    })();
+</script>
