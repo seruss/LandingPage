@@ -90,6 +90,6 @@ MIT
 
 **Paweł Seweryn** — Senior Backend Developer
 
-- GitHub: [@seruss](https://github.com/seruss)
+- Website: [pawel-seweryn.pl](https://www.pawel-seweryn.pl)
 - LinkedIn: [Paweł Seweryn](https://www.linkedin.com/in/pawe%C5%82-seweryn-4677b7106/)
 - Email: serus1604@gmail.com
