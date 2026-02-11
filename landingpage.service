@@ -1,0 +1,13 @@
+[Unit]
+Description=Landing Page - Blazor Web App
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/landingpage
+ExecStart=/usr/bin/dotnet LandingPage.dll --urls "http://localhost:5090"
+Restart=always
+RestartSec=10
+Environment=ASPNETCORE_ENVIRONMENT=Production
+
+[Install]
+WantedBy=multi-user.target
