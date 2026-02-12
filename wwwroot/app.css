@@ -1064,39 +1064,42 @@ img {
 /* =============================================
    Why Different / Tech Stack Section
    ============================================= */
-.why-stack {
-    padding: 6rem 0;
+.why-different-section,
+.tech-stack-section {
+    padding: 5rem 0;
     border-top: 1px solid var(--slate-800);
 }
 
-.why-stack-layout {
-    display: grid;
-    gap: 4rem;
+.tech-stack-section {
+    padding-top: 0;
+    border-top: none;
 }
 
-@media (min-width: 1024px) {
-    .why-stack-layout {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-.why-title,
-.stack-title {
+.section-heading {
     font-size: 1.875rem;
     font-weight: 700;
     color: var(--text-heading);
+    margin-bottom: 0.5rem;
+}
+
+.section-heading-bar {
+    height: 0.25rem;
+    width: 5rem;
+    background: var(--primary);
+    border-radius: 9999px;
     margin-bottom: 2rem;
 }
 
 /* JSON code block */
 .json-block {
     background: #0B0E14;
-    padding: 1.5rem;
+    padding: 1.5rem 2rem;
     border-radius: var(--radius-lg);
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 0.875rem;
     line-height: 1.7;
     border: 1px solid var(--slate-800);
+    overflow-x: auto;
 }
 
 .json-comment {
@@ -1117,15 +1120,28 @@ img {
 }
 
 .json-line {
-    padding-left: 1rem;
+    padding-left: 1.5rem;
     margin-top: 0.5rem;
 }
 
-/* Tech stack groups */
+/* Tech stack groups — 3-column grid on desktop */
 .stack-groups {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .stack-groups {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem 3rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .stack-groups {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .stack-group-label {
@@ -1135,22 +1151,23 @@ img {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 0.75rem;
+    font-weight: 600;
 }
 
 .stack-badges {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 0.5rem;
 }
 
 .stack-badge {
-    padding: 0.5rem 1rem;
+    padding: 0.375rem 0.75rem;
     background: var(--slate-800);
     border: 1px solid var(--slate-700);
     border-radius: var(--radius);
     color: var(--slate-300);
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     transition: all 0.2s;
     cursor: default;
 }
