@@ -12,22 +12,11 @@
                 <div class="flagship-diagram">
                     <div class="flagship-diagram-bg bg-grid-pattern"></div>
                     <div class="arch-diagram">
-                        @* Ingest layer *@
-                        <div style="display:flex;justify-content:center">
-                            <div class="arch-node arch-node-ingest">
-                                gRPC Ingest<br /><span>Load Balancer</span>
-                            </div>
-                        </div>
-
-                        <div class="arch-connector">
-                            <div class="arch-connector-line"></div>
-                        </div>
-
-                        @* Worker nodes *@
+                        @* Client apps layer *@
                         <div class="arch-workers">
-                            <div class="arch-worker">Worker Node</div>
-                            <div class="arch-worker">Worker Node</div>
-                            <div class="arch-worker">Worker Node</div>
+                            <div class="arch-worker">.NET App</div>
+                            <div class="arch-worker">Python App</div>
+                            <div class="arch-worker">Typescript App</div>
                         </div>
 
                         <div class="arch-split">
@@ -35,15 +24,43 @@
                             <div class="arch-split-horizontal"></div>
                         </div>
 
-                        @* Storage layer *@
+                        @* Dual-protocol ingestion *@
                         <div class="arch-storage">
                             <div class="arch-store">
-                                <span class="arch-store-label arch-store-label-redis">REDIS</span>
-                                Hot Cache
+                                <span class="arch-store-label arch-store-label-redis">gRPC</span>
+                                Streaming, Unary
                             </div>
                             <div class="arch-store">
+                                <span class="arch-store-label arch-store-label-elastic">REST</span>
+                                HTTP/1.1
+                            </div>
+                        </div>
+
+                        <div class="arch-connector">
+                            <div class="arch-connector-line"></div>
+                        </div>
+
+                        @* Core — the distributed monolith *@
+                        <div style="display:flex;justify-content:center">
+                            <div class="arch-node arch-node-ingest">
+	                            API + Worker <br /><span>Distributed Monolith</span>
+                            </div>
+                        </div>
+
+                        <div class="arch-split">
+                            <div class="arch-split-center"></div>
+                            <div class="arch-split-horizontal"></div>
+                        </div>
+
+                        @* Storage & coordination layer *@
+                        <div class="arch-storage">
+                            <div class="arch-store">
                                 <span class="arch-store-label arch-store-label-elastic">ELASTIC</span>
-                                Long-term
+                                Data Store
+                            </div>
+                            <div class="arch-store">
+                                <span class="arch-store-label arch-store-label-redis">REDIS</span>
+                                Coordination
                             </div>
                         </div>
                     </div>
@@ -58,7 +75,8 @@
 
                     <p class="flagship-desc">
                         Centralized logging system for .NET distributed applications, processing structured logs from 300+
-                        microservice instances. Elasticsearch storage, gRPC streaming ingestion, Redis buffering. Reduced
+                        microservices. Built as a distributed monolith with dual-protocol ingestion (gRPC + REST),
+                        Elasticsearch storage, and Redis-coordinated multi-instance synchronization. Reduced
                         mean time to detect from hours to minutes. Later formalized as M.Sc. thesis.
                     </p>
 
@@ -80,8 +98,9 @@
                     <div class="tech-tags">
                         <span class="tech-tag tech-tag-primary">C# / .NET</span>
                         <span class="tech-tag">gRPC</span>
-                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">REST</span>
                         <span class="tech-tag">Elasticsearch</span>
+                        <span class="tech-tag">Redis</span>
                         <span class="tech-tag">Kubernetes</span>
                     </div>
 
@@ -95,20 +114,39 @@
                                 <div class="detail-block">
                                     <h4 class="detail-block-title">Architecture</h4>
                                     <ul class="detail-list">
-                                        <li><strong>Log Collection:</strong> gRPC ingestion (unary + streaming) with REST API fallback,
-                                            structured logging format for .NET application integration</li>
-                                        <li><strong>Storage &amp; Indexing:</strong> Elasticsearch with index rotation, retention management,
-                                            and query optimization for TB-scale data</li>
-                                        <li><strong>Buffering:</strong> Redis for reliable log delivery — cannot lose production logs</li>
-                                        <li><strong>No Kafka</strong> — direct ingestion to Elasticsearch (intentional architectural decision)</li>
+                                        <li>
+                                            <strong>Distributed Monolith:</strong> Single API project containing controllers, gRPC services,
+                                            queuing, and background tasks — horizontally scalable via Kubernetes replicas
+                                        </li>
+                                        <li>
+                                            <strong>Dual-Protocol Ingestion:</strong> gRPC on :50051 (unary + duplex streaming) and
+                                            REST on :5000, with standalone client libraries for both
+                                        </li>
+                                        <li>
+                                            <strong>Storage &amp; Indexing:</strong> Elasticsearch with index lifecycle management, retention
+                                            policies, and optimized mappings for TB-scale data
+                                        </li>
+                                        <li>
+                                            <strong>Coordination:</strong> Redis for distributed locks, quota management, and
+                                            multi-instance synchronization
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="detail-block">
                                     <h4 class="detail-block-title">Technical Challenges Solved</h4>
                                     <ul class="detail-list">
-                                        <li><strong>Scale:</strong> Efficient indexing strategies and query optimization for 3TB+ daily volume</li>
-                                        <li><strong>Performance:</strong> gRPC streaming for high throughput with batching and backpressure handling</li>
-                                        <li><strong>Reliability:</strong> Idempotent ingestion, retry mechanisms, Redis buffering for zero log loss</li>
+                                        <li>
+                                            <strong>Scale:</strong> TPL Dataflow pipelines (REST) and System.Threading.Channels (gRPC)
+                                            with backpressure and retention-based queue routing
+                                        </li>
+                                        <li>
+                                            <strong>Performance:</strong> gRPC streaming + MemoryPack/Protocol Buffers serialization
+                                            for high-throughput ingestion with batching
+                                        </li>
+                                        <li>
+                                            <strong>Reliability:</strong> In-memory queues with automatic disk-based fallback on connection loss,
+                                            connection probe for recovery — zero log loss
+                                        </li>
                                         <li><strong>Data Model:</strong> Unified log schema with field mapping and metadata standardization across 300+ services</li>
                                     </ul>
                                 </div>
@@ -117,18 +155,14 @@
                                 <h4 class="detail-block-title">Business Value</h4>
                                 <p class="detail-note">
                                     Centralized logging for the entire ecosystem. Reduced mean time to detect from <strong>hours to minutes</strong>.
-                                    Single source of truth for debugging production issues.
+                                    Single source of truth for debugging production issues, with alerting (watchers), application quotas, and
+                                    Kibana dashboards.
                                     <strong>Master's thesis</strong> based on 2 years of real production data — a rare combination of academic rigor
                                     and production validation.
                                 </p>
                             </div>
                         </div>
                     </details>
-
-                    <a href="https://github.com/seruss" class="link-arrow" target="_blank" rel="noopener" style="margin-top:1rem;display:inline-flex;">
-                        View on GitHub
-                        <span class="material-icons">arrow_forward</span>
-                    </a>
                 </div>
             </div>
         </div>
