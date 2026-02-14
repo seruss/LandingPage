@@ -78,16 +78,7 @@ public class EventBuffer : BackgroundService
         lock (_globalCountLock)
         {
             var now = DateTime.UtcNow;
-            if ((now - _currentMinuteStart).TotalMinutes >= 1)
-            {
-                _minuteHistory.Enqueue((_currentMinuteStart, _globalEventsThisMinute));
-                // Keep only last N minutes
-                while (_minuteHistory.Count > AnomalyWindowMinutes)
-                    _minuteHistory.TryDequeue(out _);
-
-                _currentMinuteStart = now;
-                _globalEventsThisMinute = 0;
-            }
+            RotateTimeWindow(now);
 
             _globalEventsThisMinute++;
 
@@ -191,6 +182,11 @@ public class EventBuffer : BackgroundService
 
     private void CheckForAnomalies()
     {
+        lock (_globalCountLock)
+        {
+            RotateTimeWindow(DateTime.UtcNow);
+        }
+
         var history = _minuteHistory.ToArray();
         if (history.Length < 2) return;
 
@@ -201,11 +197,14 @@ public class EventBuffer : BackgroundService
         {
             if (_globalEventsThisMinute > avg * AnomalyMultiplier)
             {
-                _logger.LogWarning(
-                    "ANOMALY DETECTED: Current minute has {Current} events, average is {Avg:F0}. " +
-                    "This is {Ratio:F1}x the average. Throttling enabled.",
-                    _globalEventsThisMinute, avg, _globalEventsThisMinute / avg);
-                _throttled = true;
+                if (!_throttled)
+                {
+                    _logger.LogWarning(
+                        "ANOMALY DETECTED: Current minute has {Current} events, average is {Avg:F0}. " +
+                        "This is {Ratio:F1}x the average. Throttling enabled.",
+                        _globalEventsThisMinute, avg, _globalEventsThisMinute / avg);
+                    _throttled = true;
+                }
             }
             else
             {
@@ -225,6 +224,20 @@ public class EventBuffer : BackgroundService
                 if (kvp.Value.Count == 0)
                     _ipEventTimestamps.TryRemove(kvp.Key, out _);
             }
+        }
+    }
+
+    private void RotateTimeWindow(DateTime now)
+    {
+        if ((now - _currentMinuteStart).TotalMinutes >= 1)
+        {
+            _minuteHistory.Enqueue((_currentMinuteStart, _globalEventsThisMinute));
+            // Keep only last N minutes
+            while (_minuteHistory.Count > AnomalyWindowMinutes)
+                _minuteHistory.TryDequeue(out _);
+
+            _currentMinuteStart = now;
+            _globalEventsThisMinute = 0;
         }
     }
 
