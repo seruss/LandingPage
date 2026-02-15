@@ -81,13 +81,10 @@
             const oscillator = audioCtx.createOscillator();
             const analyser = audioCtx.createAnalyser();
             const gain = audioCtx.createGain();
-            const processor = audioCtx.createScriptProcessor(4096, 1, 1);
-
             gain.gain.value = 0;
             oscillator.type = 'triangle';
             oscillator.connect(analyser);
-            analyser.connect(processor);
-            processor.connect(gain);
+            analyser.connect(gain);
             gain.connect(audioCtx.destination);
 
             components.push('audio_' + audioCtx.sampleRate);
