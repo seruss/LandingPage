@@ -9,8 +9,8 @@
     'use strict';
 
     const CONFIG = {
-        enrichEndpoint: '/api/analytics/enrich',
-        eventsEndpoint: '/api/analytics/events',
+        enrichEndpoint: '/api/t/e',
+        eventsEndpoint: '/api/t/x',
         flushIntervalMs: 5000,
         maxEventsPerSession: 200,
         mouseSampleMs: 500,
@@ -82,14 +82,14 @@
             const analyser = audioCtx.createAnalyser();
             const gain = audioCtx.createGain();
             const processor = audioCtx.createScriptProcessor(4096, 1, 1);
-            
+
             gain.gain.value = 0;
             oscillator.type = 'triangle';
             oscillator.connect(analyser);
             analyser.connect(processor);
             processor.connect(gain);
             gain.connect(audioCtx.destination);
-            
+
             components.push('audio_' + audioCtx.sampleRate);
             audioCtx.close();
         } catch (e) {

@@ -12,10 +12,10 @@ public static class AnalyticsEndpoints
 
     public static void MapAnalyticsEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("/api/analytics");
+        var group = app.MapGroup("/api/t");
 
         // Client enrichment: screen info, fingerprint, performance data
-        group.MapPost("/enrich", async (HttpContext context) =>
+        group.MapPost("/e", async (HttpContext context) =>
         {
             var db = context.RequestServices.GetService<ISurrealDbClient>();
             if (db == null)
@@ -85,7 +85,7 @@ public static class AnalyticsEndpoints
         });
 
         // Batch events: clicks, scrolls, mouse moves, etc.
-        group.MapPost("/events", async (HttpContext context, EventBuffer buffer) =>
+        group.MapPost("/x", async (HttpContext context, EventBuffer buffer) =>
         {
             if (context.Request.ContentLength > MaxPayloadBytes)
                 return Results.StatusCode(413);
