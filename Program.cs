@@ -36,7 +36,7 @@ app.Use(async (context, next) =>
               || (path.StartsWith("/app.") && path.EndsWith(".css")),
 
         // Analytics tracker endpoints
-        "POST" => path == AnalyticsEndpoints.FullEnrichPath || path == AnalyticsEndpoints.FullEventsPath,
+        "POST" => path == AnalyticsEndpoints.FullEnrichPath,
 
         _ => false
     };

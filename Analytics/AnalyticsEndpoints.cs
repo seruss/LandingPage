@@ -12,10 +12,8 @@ public static class AnalyticsEndpoints
 
     public const string BasePath = "/api/t";
     public const string EnrichPath = "/e";
-    public const string EventsPath = "/x";
     
     public const string FullEnrichPath = BasePath + EnrichPath;
-    public const string FullEventsPath = BasePath + EventsPath;
 
     public static void MapAnalyticsEndpoints(this WebApplication app)
     {
@@ -90,40 +88,6 @@ public static class AnalyticsEndpoints
                 return Results.StatusCode(500);
             }
         });
-
-        // Batch events: clicks, scrolls, mouse moves, etc.
-        group.MapPost(EventsPath, async (HttpContext context, EventBuffer buffer) =>
-        {
-            if (context.Request.ContentLength > MaxPayloadBytes)
-                return Results.StatusCode(413);
-
-            var body = await JsonSerializer.DeserializeAsync<EventBatchPayload>(
-                context.Request.Body,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-            if (body?.Events == null || body.Events.Count == 0)
-                return Results.BadRequest();
-
-            var ip = GetClientIp(context);
-            var accepted = 0;
-
-            foreach (var evt in body.Events)
-            {
-                var trackingEvent = new TrackingEvent
-                {
-                    VisitId = evt.VisitId ?? body.VisitId ?? string.Empty,
-                    EventType = evt.EventType ?? "unknown",
-                    EventData = evt.EventData is JsonElement el ? el.GetRawText() : evt.EventData?.ToString(),
-                    PageUrl = evt.PageUrl,
-                    Timestamp = evt.Timestamp ?? DateTime.UtcNow
-                };
-
-                if (buffer.TryEnqueueEvent(trackingEvent, ip))
-                    accepted++;
-            }
-
-            return Results.Ok(new { accepted, total = body.Events.Count });
-        });
     }
 
     private static string GetClientIp(HttpContext context)
@@ -162,19 +126,4 @@ public class EnrichPayload
     public double? FirstPaintMs { get; set; }
     public double? FirstContentfulPaintMs { get; set; }
     public double? TimeToInteractiveMs { get; set; }
-}
-
-public class EventBatchPayload
-{
-    public string? VisitId { get; set; }
-    public List<EventPayloadItem> Events { get; set; } = new();
-}
-
-public class EventPayloadItem
-{
-    public string? VisitId { get; set; }
-    public string? EventType { get; set; }
-    public object? EventData { get; set; }
-    public string? PageUrl { get; set; }
-    public DateTime? Timestamp { get; set; }
 }

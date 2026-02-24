@@ -1,33 +1,16 @@
 // ===================================================================
-// Comprehensive Client-Side Analytics Tracker
-// Collects: fingerprint, screen info, scroll depth, clicks, mouse
-// movement, section visibility, time-on-page, performance metrics.
-// Batches events & sends every 5s + on page unload via sendBeacon.
-// Client-side rate limiter: max 200 events per session.
+// Client-Side Analytics Tracker (Enrichment Only)
+// Collects: fingerprint, screen info, performance metrics.
 // ===================================================================
 (function () {
     'use strict';
 
     const CONFIG = {
         enrichEndpoint: '/api/t/e',
-        eventsEndpoint: '/api/t/x',
-        flushIntervalMs: 5000,
-        maxEventsPerSession: 200,
-        mouseSampleMs: 500,
-        scrollSampleMs: 300,
     };
 
     // --- State ---
     let visitId = null;
-    let eventQueue = [];
-    let eventCount = 0;
-    let maxScrollPercent = 0;
-    let sessionStartTime = Date.now();
-    let lastActiveTime = Date.now();
-    let totalActiveTimeMs = 0;
-    let isActive = true;
-    let lastMouseSample = 0;
-    let lastScrollSample = 0;
     let enrichSent = false;
 
     // --- Get visit ID from cookie ---
@@ -186,196 +169,6 @@
         }, 2000);
     }
 
-    // --- Event queue management ---
-    function pushEvent(type, data) {
-        if (eventCount >= CONFIG.maxEventsPerSession) return;
-
-        eventQueue.push({
-            visitId: visitId,
-            eventType: type,
-            eventData: data,
-            pageUrl: window.location.pathname,
-            timestamp: new Date().toISOString(),
-        });
-        eventCount++;
-    }
-
-    function flushEvents() {
-        if (eventQueue.length === 0 || !visitId) return;
-
-        const batch = eventQueue.splice(0);
-
-        const payload = JSON.stringify({
-            visitId: visitId,
-            events: batch,
-        });
-
-        // Try fetch first, fallback to sendBeacon
-        fetch(CONFIG.eventsEndpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: payload,
-            keepalive: true,
-        }).catch(() => {
-            // If fetch fails, try sendBeacon
-            try {
-                navigator.sendBeacon(CONFIG.eventsEndpoint, new Blob([payload], { type: 'application/json' }));
-            } catch (_) { /* silent */ }
-        });
-    }
-
-    // --- Section visibility tracking ---
-    function setupSectionTracking() {
-        const sections = document.querySelectorAll('section, [id]');
-        if (sections.length === 0) return;
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const target = entry.target;
-                    const id = target.id || target.className.split(' ')[0] || target.tagName;
-                    pushEvent('section_view', {
-                        sectionId: id,
-                        visiblePercent: Math.round(entry.intersectionRatio * 100),
-                    });
-                }
-            });
-        }, { threshold: [0.25, 0.5, 0.75, 1.0] });
-
-        sections.forEach(s => observer.observe(s));
-    }
-
-    // --- Scroll tracking ---
-    function setupScrollTracking() {
-        window.addEventListener('scroll', () => {
-            const now = Date.now();
-            if (now - lastScrollSample < CONFIG.scrollSampleMs) return;
-            lastScrollSample = now;
-
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const percent = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
-
-            if (percent > maxScrollPercent) {
-                maxScrollPercent = percent;
-                // Only log at 25% intervals to reduce noise
-                if (percent % 25 === 0 || percent === 100) {
-                    pushEvent('scroll', { depthPercent: percent });
-                }
-            }
-        }, { passive: true });
-    }
-
-    // --- Click tracking ---
-    function setupClickTracking() {
-        document.addEventListener('click', (e) => {
-            const target = e.target.closest('a, button, [role="button"], input[type="submit"], [data-track]') || e.target;
-
-            pushEvent('click', {
-                x: e.clientX,
-                y: e.clientY,
-                pageX: e.pageX,
-                pageY: e.pageY,
-                tag: target.tagName.toLowerCase(),
-                id: target.id || null,
-                className: (target.className && typeof target.className === 'string')
-                    ? target.className.substring(0, 100) : null,
-                text: (target.textContent || '').trim().substring(0, 50) || null,
-                href: target.href || null,
-            });
-        }, { passive: true });
-    }
-
-    // --- Mouse movement (sampled) ---
-    function setupMouseTracking() {
-        document.addEventListener('mousemove', (e) => {
-            const now = Date.now();
-            if (now - lastMouseSample < CONFIG.mouseSampleMs) return;
-            lastMouseSample = now;
-
-            pushEvent('mouse_move', {
-                x: e.clientX,
-                y: e.clientY,
-                pageX: e.pageX,
-                pageY: e.pageY,
-            });
-        }, { passive: true });
-    }
-
-    // --- Active/idle time tracking ---
-    function setupVisibilityTracking() {
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                // Going idle
-                if (isActive) {
-                    totalActiveTimeMs += Date.now() - lastActiveTime;
-                    isActive = false;
-                }
-                pushEvent('visibility_change', { state: 'hidden' });
-            } else {
-                // Coming back
-                lastActiveTime = Date.now();
-                isActive = true;
-                pushEvent('visibility_change', { state: 'visible' });
-            }
-        });
-
-        // Also track user inactivity (no mouse/key for 30s)
-        let inactivityTimer;
-        const resetInactivity = () => {
-            if (!isActive) {
-                lastActiveTime = Date.now();
-                isActive = true;
-            }
-            clearTimeout(inactivityTimer);
-            inactivityTimer = setTimeout(() => {
-                if (isActive) {
-                    totalActiveTimeMs += Date.now() - lastActiveTime;
-                    isActive = false;
-                }
-            }, 30000);
-        };
-
-        document.addEventListener('mousemove', resetInactivity, { passive: true });
-        document.addEventListener('keydown', resetInactivity, { passive: true });
-        document.addEventListener('touchstart', resetInactivity, { passive: true });
-        document.addEventListener('scroll', resetInactivity, { passive: true });
-        resetInactivity();
-    }
-
-    // --- Page unload: send final metrics ---
-    function setupUnloadTracking() {
-        const sendFinal = () => {
-            if (isActive) {
-                totalActiveTimeMs += Date.now() - lastActiveTime;
-            }
-
-            pushEvent('unload', {
-                totalTimeMs: Date.now() - sessionStartTime,
-                activeTimeMs: totalActiveTimeMs,
-                maxScrollPercent: maxScrollPercent,
-                totalEvents: eventCount,
-            });
-
-            // Use sendBeacon for reliability on unload
-            const payload = JSON.stringify({
-                visitId: visitId,
-                events: eventQueue.splice(0),
-            });
-
-            try {
-                navigator.sendBeacon(
-                    CONFIG.eventsEndpoint,
-                    new Blob([payload], { type: 'application/json' })
-                );
-            } catch (_) { /* silent */ }
-        };
-
-        window.addEventListener('beforeunload', sendFinal);
-        // iOS doesn't always fire beforeunload
-        window.addEventListener('pagehide', sendFinal);
-    }
-
     // --- Init ---
     function init() {
         visitId = getVisitId();
@@ -394,24 +187,6 @@
     function startTracking() {
         // Send client enrichment data
         sendEnrichment();
-
-        // Record initial page view event
-        pushEvent('page_view', {
-            url: window.location.href,
-            referrer: document.referrer || null,
-            title: document.title,
-        });
-
-        // Setup all trackers
-        setupSectionTracking();
-        setupScrollTracking();
-        setupClickTracking();
-        setupMouseTracking();
-        setupVisibilityTracking();
-        setupUnloadTracking();
-
-        // Periodic flush
-        setInterval(flushEvents, CONFIG.flushIntervalMs);
     }
 
     // --- Boot ---
