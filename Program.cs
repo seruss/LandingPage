@@ -19,6 +19,37 @@ builder.Services.AddHostedService(sp => sp.GetRequiredService<EventBuffer>());
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    var path = context.Request.Path.Value?.ToLower().TrimEnd('/') ?? "";
+    var method = context.Request.Method;
+
+    bool allowed = method switch
+    {
+        // Your landing page & exact assets
+        "GET" => path is "" or "/"
+              || path == "/favicon.png"
+              || path == "/_framework/blazor.web.js"
+              || path == "/js/animations.js"
+              || path == "/js/theme.js"
+              || path == "/js/tracker.js"
+              || (path.StartsWith("/app.") && path.EndsWith(".css")),
+
+        // Analytics tracker endpoints
+        "POST" => path == AnalyticsEndpoints.FullEnrichPath || path == AnalyticsEndpoints.FullEventsPath,
+
+        _ => false
+    };
+
+    if (!allowed)
+    {
+        context.Response.StatusCode = 404;
+        return; // ~0.01ms of your CPU, done
+    }
+
+    await next();
+});
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

@@ -10,12 +10,19 @@ public static class AnalyticsEndpoints
 {
     private const int MaxPayloadBytes = 50 * 1024; // 50KB max
 
+    public const string BasePath = "/api/t";
+    public const string EnrichPath = "/e";
+    public const string EventsPath = "/x";
+    
+    public const string FullEnrichPath = BasePath + EnrichPath;
+    public const string FullEventsPath = BasePath + EventsPath;
+
     public static void MapAnalyticsEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("/api/t");
+        var group = app.MapGroup(BasePath);
 
         // Client enrichment: screen info, fingerprint, performance data
-        group.MapPost("/e", async (HttpContext context) =>
+        group.MapPost(EnrichPath, async (HttpContext context) =>
         {
             var db = context.RequestServices.GetService<ISurrealDbClient>();
             if (db == null)
@@ -85,7 +92,7 @@ public static class AnalyticsEndpoints
         });
 
         // Batch events: clicks, scrolls, mouse moves, etc.
-        group.MapPost("/x", async (HttpContext context, EventBuffer buffer) =>
+        group.MapPost(EventsPath, async (HttpContext context, EventBuffer buffer) =>
         {
             if (context.Request.ContentLength > MaxPayloadBytes)
                 return Results.StatusCode(413);
