@@ -57,52 +57,6 @@ Open [http://localhost:5028](http://localhost:5028) in your browser.
 dotnet publish -c Release
 ```
 
-## 📁 Project Structure
-
-```
-LandingPage/
-├── .github/
-│   └── workflows/                       # CI/CD pipeline
-├── Analytics/
-│   ├── AnalyticsEndpoints.cs            # API endpoints for stats dashboard
-│   ├── AnalyticsMiddleware.cs           # Request tracking middleware
-│   ├── EventBuffer.cs                   # Batched event buffer for SurrealDB
-│   ├── TrackingEvent.cs                 # Event model
-│   └── VisitRecord.cs                   # Visit record model
-├── Components/
-│   ├── App.razor                        # HTML root, fonts, meta
-│   ├── Routes.razor                     # Blazor routing
-│   ├── _Imports.razor                   # Global using directives
-│   ├── Layout/
-│   │   └── MainLayout.razor             # Fixed navigation bar + theme toggle
-│   ├── Pages/
-│   │   └── Home.razor                   # Main page composing all sections
-│   └── Sections/                        # Individual section components
-│       ├── HeroSection.razor
-│       ├── WhatIDoSection.razor
-│       ├── FlagshipProjectSection.razor
-│       ├── SelectedWorksSection.razor
-│       ├── ExperienceSection.razor
-│       ├── WhyDifferentSection.razor
-│       ├── TechStackSection.razor
-│       ├── EducationSection.razor
-│       ├── SideProjectsAboutSection.razor
-│       └── FooterSection.razor
-├── Properties/
-│   └── launchSettings.json              # Dev server config
-├── wwwroot/
-│   ├── app.css                          # Complete design system + light/dark themes
-│   ├── favicon.png
-│   └── js/
-│       ├── animations.js                # Scroll reveals, counters, parallax
-│       ├── theme.js                     # Dark/light theme toggle persistence
-│       └── tracker.js                   # Analytics tracking client
-├── Program.cs                           # Blazor startup + middleware
-├── appsettings.json                     # Base configuration
-├── appsettings.Development.json         # Development overrides
-└── appsettings.Production.json          # Production overrides (SurrealDB, etc.)
-```
-
 ## 📄 License
 
 MIT
@@ -113,4 +67,3 @@ MIT
 
 - Website: [pawel-seweryn.pl](https://www.pawel-seweryn.pl)
 - LinkedIn: [Paweł Seweryn](https://www.linkedin.com/in/pawe%C5%82-seweryn-4677b7106/)
-- Email: serus1604@gmail.com
