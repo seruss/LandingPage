@@ -8,10 +8,10 @@
                 <div class="footer-contact-line" id="footer-phone"></div>
             </div>
             <div class="footer-socials">
-                <a class="footer-social" href="https://github.com/seruss" target="_blank" rel="noopener" aria-label="GitHub">
+                <a class="footer-social" id="footer-git" href="#" target="_blank" rel="noopener" aria-label="GitHub">
                     <svg viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
                 </a>
-                <a class="footer-social" href="https://www.linkedin.com/in/pawe%C5%82-seweryn-4677b7106/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <a class="footer-social" id="footer-li" href="#" target="_blank" rel="noopener" aria-label="LinkedIn">
                     <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
             </div>
@@ -24,12 +24,18 @@
 
 <script>
     (function () {
-        var u = 'contact', d = 'pawel-seweryn', t = 'pl';
-        var e = u + '\x40' + d + '.' + t;
+        var dx = function(arr) { return arr.map(function(c) { return String.fromCharCode(c ^ 42); }).join(''); };
+        var em = [73,69,68,94,75,73,94,106,90,75,93,79,70,7,89,79,93,79,88,83,68,4,90,70];
         var el = document.getElementById('footer-email');
-        if (el) { el.href = 'mai' + 'lto:' + e; el.textContent = e; }
+        if (el) { el.href = 'mai' + 'lto:' + dx(em); el.textContent = dx(em); }
 
         var ph = document.getElementById('footer-phone');
-        if (ph) { ph.textContent = ['+48', '796', '561', '084'].join(' ') + ' \u00b7 Tychy, Poland'; }
+        if (ph) { ph.textContent = dx([1,30,18,10,29,19,28,10,31,28,27,10,26,18,30,10,141,10,126,83,73,66,83,6,10,122,69,70,75,68,78]); }
+
+        var gh = document.getElementById('footer-git');
+        if (gh) { gh.href = dx([66,94,94,90,89,16,5,5,77,67,94,66,95,72,4,73,69,71,5,89,79,88,95,89,89]); }
+
+        var li = document.getElementById('footer-li');
+        if (li) { li.href = dx([66,94,94,90,89,16,5,5,93,93,93,4,70,67,68,65,79,78,67,68,4,73,69,71,5,67,68,5,90,75,93,79,15,105,31,15,18,8,7,89,79,93,79,88,83,68,7,30,28,29,29,72,29,27,26,28,5]); }
     })();
 </script>
